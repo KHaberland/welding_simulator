@@ -1,6 +1,6 @@
 /**
- * UI: слайдеры, TORCH MOVEMENT, START/STOP/RESET, readout (ТЗ §6, §15, §25–26, §35, §51–52).
- * Этап 4.
+ * UI: слайдеры, TORCH MOVEMENT, START/STOP/RESET, readout (ТЗ §6, §15, §25–26, §35, §49–52).
+ * Этап 8.
  */
 
 import { WIRE_DIAMETERS, RANGES, DEFAULTS } from "./data.js";
@@ -20,9 +20,14 @@ function fmt(n, digits = 1) {
 }
 
 function syncReadouts() {
+  const wfsText = `${fmt(state.wireFeed, 1)} m/min`;
+  const voltageSetText = `${fmt(state.voltageSet, 1)} V`;
+
   if (el.diameterVal) el.diameterVal.textContent = `${fmt(state.wireDiameter, 1)} mm`;
-  if (el.wfsVal) el.wfsVal.textContent = `${fmt(state.wireFeed, 1)} m/min`;
-  if (el.voltageVal) el.voltageVal.textContent = `${fmt(state.voltageSet, 1)} V`;
+  if (el.wfsVal) el.wfsVal.textContent = wfsText;
+  if (el.wfsOut) el.wfsOut.textContent = wfsText;
+  if (el.voltageVal) el.voltageVal.textContent = voltageSetText;
+  if (el.voltageSetOut) el.voltageSetOut.textContent = voltageSetText;
   if (el.torchVal) el.torchVal.textContent = state.torchMovement ? "ON" : "OFF";
 
   if (el.currentOut) {
@@ -37,7 +42,9 @@ function syncReadouts() {
     el.stickOut.textContent = `${fmt(state.stickOut, 1)} mm`;
   }
   if (el.stabilityOut) {
-    el.stabilityOut.textContent = state.stabilityLabel || "---";
+    const label = state.stabilityLabel || "---";
+    el.stabilityOut.textContent = label;
+    el.stabilityOut.dataset.stability = label;
   }
 
   const running = state.welding;
@@ -57,6 +64,8 @@ export function initControls(root) {
   el.wfsVal = root.querySelector("#val-wfs");
   el.voltageVal = root.querySelector("#val-voltage");
   el.torchVal = root.querySelector("#val-torch");
+  el.wfsOut = root.querySelector("#out-wfs");
+  el.voltageSetOut = root.querySelector("#out-voltage-set");
   el.currentOut = root.querySelector("#out-current");
   el.actualVOut = root.querySelector("#out-actual-v");
   el.stickOut = root.querySelector("#out-stick");
