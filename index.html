@@ -10,63 +10,70 @@
   <div class="app">
     <canvas id="weld-canvas" aria-label="Схема сварочного процесса, боковой вид"></canvas>
     <aside class="dock" id="controls-panel">
-      <section class="readouts" aria-label="Параметры процесса">
-        <div class="readout">
-          <span class="readout__label">WFS</span>
-          <span id="out-wfs" class="readout__value">—</span>
+      <div class="panel">
+        <div class="panel__knob">
+          <svg class="knob-icon" viewBox="0 0 32 28" aria-hidden="true">
+            <circle cx="16" cy="9" r="5" />
+            <circle cx="16" cy="19" r="5" />
+            <line x1="8.5" y1="14" x2="23.5" y2="14" />
+            <polygon points="5.2,14 10.2,11.2 10.2,16.8" />
+          </svg>
+          <div class="knob-stub" data-unit="m/min" aria-hidden="true"></div>
+          <span id="val-wfs" class="knob-stub__val">—</span>
         </div>
-        <div class="readout">
-          <span class="readout__label">VOLTAGE SET</span>
-          <span id="out-voltage-set" class="readout__value">—</span>
-        </div>
-        <div class="readout">
-          <span class="readout__label">ACTUAL V</span>
-          <span id="out-actual-v" class="readout__value">--- V</span>
-        </div>
-        <div class="readout">
-          <span class="readout__label">CURRENT</span>
-          <span id="out-current" class="readout__value">--- A</span>
-        </div>
-        <div class="readout readout--stability">
-          <span class="readout__label">STABILITY</span>
-          <span id="out-stability" class="readout__value" data-stability="---">---</span>
-        </div>
-      </section>
 
-      <section class="ctrls" aria-label="Управление">
-        <div class="ctrl">
-          <label class="ctrl__label" for="ctrl-diameter">WIRE Ø</label>
+        <div class="panel__center">
+          <section class="display" aria-label="Ток и напряжение">
+            <div class="display__cell">
+              <span id="out-current" class="display__value">--- A</span>
+            </div>
+            <div class="display__cell">
+              <span id="out-actual-v" class="display__value">--- V</span>
+            </div>
+          </section>
+          <div class="actions">
+            <button type="button" id="btn-start" class="btn btn--start">START</button>
+            <button type="button" id="btn-stop" class="btn btn--stop" disabled>STOP</button>
+            <button type="button" id="btn-reset" class="btn btn--reset">RESET</button>
+          </div>
+        </div>
+
+        <div class="panel__knob">
+          <span class="knob-stub__caption" aria-hidden="true">U</span>
+          <div class="knob-stub" data-unit="V" aria-hidden="true"></div>
+          <span id="val-voltage" class="knob-stub__val">—</span>
+        </div>
+      </div>
+
+      <section class="aux" aria-label="Управление">
+        <div class="aux__item">
+          <label class="aux__label" for="ctrl-diameter">Ø</label>
           <select id="ctrl-diameter" class="ctrl__select"></select>
-          <span id="val-diameter" class="ctrl__val">—</span>
+          <span id="val-diameter" class="aux__val">—</span>
         </div>
-        <div class="ctrl">
-          <label class="ctrl__label" for="ctrl-wfs">WIRE FEED</label>
-          <input id="ctrl-wfs" class="ctrl__range" type="range" />
-          <span id="val-wfs" class="ctrl__val">—</span>
-        </div>
-        <div class="ctrl">
-          <label class="ctrl__label" for="ctrl-voltage">VOLTAGE</label>
-          <input id="ctrl-voltage" class="ctrl__range" type="range" />
-          <span id="val-voltage" class="ctrl__val">—</span>
-        </div>
-        <div class="ctrl ctrl--torch">
-          <span class="ctrl__label" id="lbl-torch">TORCH MOVEMENT</span>
+        <div class="aux__item aux__item--torch">
+          <span class="aux__label" id="lbl-torch">TORCH</span>
           <label class="switch">
             <input id="ctrl-torch" type="checkbox" aria-labelledby="lbl-torch" />
             <span class="switch__ui" aria-hidden="true"></span>
           </label>
-          <span id="val-torch" class="ctrl__val">OFF</span>
+          <span id="val-torch" class="aux__val">OFF</span>
           <span class="ctrl__stick">
-            <span class="readout__label">STICK-OUT</span>
+            <span class="aux__label">STICK-OUT</span>
             <span id="out-stick">15.0 mm</span>
           </span>
         </div>
+        <div class="aux__item aux__item--stability">
+          <span class="aux__label">STABILITY</span>
+          <span id="out-stability" class="aux__val aux__val--stability" data-stability="---">---</span>
+        </div>
       </section>
 
-      <div class="actions">
-        <button type="button" id="btn-start" class="btn btn--start">START</button>
-        <button type="button" id="btn-stop" class="btn btn--stop" disabled>STOP</button>
-        <button type="button" id="btn-reset" class="btn btn--reset">RESET</button>
+      <div class="sr-only">
+        <label for="ctrl-wfs">WIRE FEED</label>
+        <input id="ctrl-wfs" type="range" />
+        <label for="ctrl-voltage">VOLTAGE</label>
+        <input id="ctrl-voltage" type="range" />
       </div>
     </aside>
   </div>

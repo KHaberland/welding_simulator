@@ -9,8 +9,27 @@ export const WIRE_DIAMETERS = [
 ];
 
 export const RANGES = {
-  wireFeed: { min: 1.0, max: 15.0, step: 0.1 },
-  voltage: { min: 15.0, max: 30.0, step: 0.1 },
+  wireFeed: { min: 1.0, max: 18.0, step: 0.1 },
+  voltage: { min: 10.0, max: 30.0, step: 0.1 },
+};
+
+/** UI панели v2: ручки 7h–17h, подписи шкал, tau дисплея. */
+export const UI_CONFIG = {
+  /** 12h = 0°, по часовой. 7h → 17h (= 5h). */
+  knobStartHour: 7,
+  knobEndHour: 17,
+  knobStartDeg: 210,
+  knobSweepDeg: 300,
+  /** Сглаживание I/U на дисплее при КЗ-OFF (этап 4). */
+  displayTau: 0.18,
+  wfs: {
+    labels: [1, 3, 6, 9, 12, 15, 18],
+    minorStep: 1,
+  },
+  voltage: {
+    labels: [10, 15, 20, 25, 30],
+    minorStep: 1,
+  },
 };
 
 export const DEFAULTS = {
@@ -53,6 +72,28 @@ export const WELDING_CONFIG = {
   dropletSizeMax: 1.95,
   /** Мерцание дуги при низкой stability (0…1). */
   arcFlickerFactor: 0.55,
+};
+
+/** Аудио MVP (ТЗ §40–41). Коэффициенты только здесь. */
+export const AUDIO_CONFIG = {
+  masterVolume: 0.42,
+  hissGain: 0.38,
+  pulseGain: 0.9,
+  crackleGain: 0.55,
+  /** Ток (A), при котором интенсивность ≈ 1. */
+  currentRef: 160,
+  /** Мин. arcIntensity, чтобы шипение дуги было слышно. */
+  hissArcMin: 0.12,
+  interruptChancePerSec: 2.4,
+  interruptMs: 160,
+  crackleRatePerSec: 9,
+  pulseMinIntervalMs: 45,
+  fadeTau: 0.03,
+  samples: {
+    hiss: "audio/arc-hiss.wav",
+    pulse: "audio/sc-pulse.wav",
+    crackle: "audio/crackle.wav",
+  },
 };
 
 /** Длительности фаз FSM (мс). Этап 3. */

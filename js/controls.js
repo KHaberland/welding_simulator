@@ -1,9 +1,10 @@
 /**
- * UI: слайдеры, TORCH MOVEMENT, START/STOP/RESET, readout (ТЗ §6, §15, §25–26, §35, §49–52).
- * Этап 8.
+ * UI: ручки WFS/U, TORCH MOVEMENT, START/STOP/RESET, readout (ТЗ §6, §15, §25–26, §35, §49–52).
+ * v2 этап 2.
  */
 
-import { WIRE_DIAMETERS, RANGES, DEFAULTS } from "./data.js";
+import { WIRE_DIAMETERS, RANGES, DEFAULTS, UI_CONFIG } from "./data.js";
+import { mountKnob } from "./knobs.js";
 import {
   state,
   setParams,
@@ -74,6 +75,8 @@ export function initControls(root) {
   el.btnStop = root.querySelector("#btn-stop");
   el.btnReset = root.querySelector("#btn-reset");
 
+  const knobStubs = root.querySelectorAll(".panel__knob .knob-stub");
+
   if (el.diameter instanceof HTMLSelectElement) {
     el.diameter.innerHTML = WIRE_DIAMETERS.map(
       (d) => `<option value="${d.mm}">Ø ${d.mm} mm</option>`
@@ -93,7 +96,9 @@ export function initControls(root) {
       value: String(DEFAULTS.wireFeed),
     });
     el.wfs.addEventListener("input", () => {
-      setParams({ wireFeed: Number(el.wfs.value) });
+      const value = Number(el.wfs.value);
+      setParams({ wireFeed: value });
+      el.wfsKnob?.setValue(value);
       syncReadouts();
     });
   }
@@ -106,8 +111,42 @@ export function initControls(root) {
       value: String(DEFAULTS.voltageSet),
     });
     el.voltage.addEventListener("input", () => {
-      setParams({ voltageSet: Number(el.voltage.value) });
+      const value = Number(el.voltage.value);
+      setParams({ voltageSet: value });
+      el.voltageKnob?.setValue(value);
       syncReadouts();
+    });
+  }
+
+  if (knobStubs[0] instanceof HTMLElement) {
+    el.wfsKnob = mountKnob(knobStubs[0], {
+      min: RANGES.wireFeed.min,
+      max: RANGES.wireFeed.max,
+      step: RANGES.wireFeed.step,
+      value: DEFAULTS.wireFeed,
+      labels: UI_CONFIG.wfs.labels,
+      minorStep: UI_CONFIG.wfs.minorStep,
+      onChange(value) {
+        setParams({ wireFeed: value });
+        if (el.wfs instanceof HTMLInputElement) el.wfs.value = String(value);
+        syncReadouts();
+      },
+    });
+  }
+
+  if (knobStubs[1] instanceof HTMLElement) {
+    el.voltageKnob = mountKnob(knobStubs[1], {
+      min: RANGES.voltage.min,
+      max: RANGES.voltage.max,
+      step: RANGES.voltage.step,
+      value: DEFAULTS.voltageSet,
+      labels: UI_CONFIG.voltage.labels,
+      minorStep: UI_CONFIG.voltage.minorStep,
+      onChange(value) {
+        setParams({ voltageSet: value });
+        if (el.voltage instanceof HTMLInputElement) el.voltage.value = String(value);
+        syncReadouts();
+      },
     });
   }
 
