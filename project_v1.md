@@ -101,9 +101,9 @@ updateWeldingModel → updateArc → updatePenetration → renderCanvas → upda
 **Файлы:** `controls.js`, `data.js`, `welding-model.js` (минимум).
 
 **Done when:**
-- [ ] слайдеры меняют setpoint
-- [ ] до START ток/факт. U = `---`
-- [ ] после START отображается число тока
+- [x] слайдеры меняют setpoint
+- [x] до START ток/факт. U = `---`
+- [x] после START отображается число тока
 
 ---
 
@@ -114,7 +114,7 @@ updateWeldingModel → updateArc → updatePenetration → renderCanvas → upda
 **Файлы:** `welding-model.js`, `renderer.js`.
 
 **Done when:**
-- [ ] после START виден полный повторяющийся цикл: касание → КЗ → дуга → капля → перенос → recovery
+- [x] после START виден полный повторяющийся цикл: касание → КЗ → дуга → капля → перенос → recovery
 
 ---
 
@@ -125,8 +125,8 @@ updateWeldingModel → updateArc → updatePenetration → renderCanvas → upda
 **Файлы:** `welding-model.js`, `controls.js`.
 
 **Done when:**
-- [ ] TORCH MOVEMENT заметно меняет stick-out
-- [ ] цикл short-circuit не ломается
+- [x] TORCH MOVEMENT заметно меняет stick-out
+- [x] цикл short-circuit не ломается
 
 ---
 

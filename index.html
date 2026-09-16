@@ -9,6 +9,41 @@
 <body>
   <div class="app">
     <canvas id="weld-canvas" aria-label="Схема сварочного процесса, боковой вид"></canvas>
+    <aside class="panel" id="controls-panel">
+      <div class="panel__row">
+        <label for="ctrl-diameter">WIRE Ø</label>
+        <select id="ctrl-diameter"></select>
+        <span id="val-diameter" class="panel__val">—</span>
+      </div>
+      <div class="panel__row">
+        <label for="ctrl-wfs">WIRE FEED</label>
+        <input id="ctrl-wfs" type="range" />
+        <span id="val-wfs" class="panel__val">—</span>
+      </div>
+      <div class="panel__row">
+        <label for="ctrl-voltage">VOLTAGE</label>
+        <input id="ctrl-voltage" type="range" />
+        <span id="val-voltage" class="panel__val">—</span>
+      </div>
+      <div class="panel__row panel__row--toggle">
+        <label for="ctrl-torch">TORCH MOVEMENT</label>
+        <label class="toggle">
+          <input id="ctrl-torch" type="checkbox" />
+          <span id="val-torch" class="panel__val">OFF</span>
+        </label>
+      </div>
+      <div class="panel__readouts">
+        <div><span class="panel__label">CURRENT</span> <span id="out-current">--- A</span></div>
+        <div><span class="panel__label">ACTUAL V</span> <span id="out-actual-v">--- V</span></div>
+        <div><span class="panel__label">STICK-OUT</span> <span id="out-stick">15.0 mm</span></div>
+        <div><span class="panel__label">STABILITY</span> <span id="out-stability">---</span></div>
+      </div>
+      <div class="panel__actions">
+        <button type="button" id="btn-start">START</button>
+        <button type="button" id="btn-stop" disabled>STOP</button>
+        <button type="button" id="btn-reset">RESET</button>
+      </div>
+    </aside>
   </div>
   <script type="module" src="js/main.js"></script>
 </body>
